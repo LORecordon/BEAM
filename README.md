@@ -133,7 +133,13 @@ Lo anterior te requerirá estudiar cómo están definidos los modelos, revisar l
 
 Pueden agregar a continuación la URL de su colección de Postman con las peticiones para los requisitos en numerales 1, 2, 3 y 6:
 
+1. http://localhost:3000/api/v1/api-keys
+2. http://localhost:3000/api/v1/users/admin@admin.com  JSON: {"user": {"first_name": "Lucas", "last_name": "Recordon", "dob": "2001-08-20"}}
+3. http://localhost:3000/api/v1/trips                  JSON: {"trip": {"name": "admins trip", "description": "part 3 of assignment", "start_date": "2024-01-01", "end_date" "2024-02-02", "author": 51}}
+6. http://localhost:3000/api/v1/api-key/1
+
 __URL de la colección Postman:__ [insertar aquí]
+6bf280d0-f16f-4ad2-ad62-425842a6b355
 
 ## Entrega
 
