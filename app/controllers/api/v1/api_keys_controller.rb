@@ -1,7 +1,6 @@
 class API::V1::APIKeysController < APIController
   include APIKeyAuthenticatable
   prepend_before_action :authenticate_with_api_key!, only: %i[index destroy]
-
   def index
     render json: current_bearer.api_keys
   end

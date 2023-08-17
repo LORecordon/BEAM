@@ -28,7 +28,13 @@ class API::V1::DestinationsController < APIController
   end
 
   def index
-    @destinations = Destination.all
+    #fixed to show trip destinations
+    if params[:trip_id]
+      post = Post.where(trip_id: params[:trip_id])
+      @destinations = post.map(&:destinations).flatten.uniq
+    else
+      @destinations = Destination.all
+    end
     render json: @destinations
   end
 

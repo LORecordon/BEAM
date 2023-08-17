@@ -1,5 +1,5 @@
 class API::V1::PostsController < APIController
-  before_action :set_post, only: %i[ show edit update destroy ]
+  before_action :set_post, only: %i[ show edit update ]
   before_action :authenticate_with_api_key!
 
 
@@ -8,6 +8,7 @@ class API::V1::PostsController < APIController
   end
 
   def create
+    puts "hi"
     @post = Post.new(post_params)
     if @post.save
       params[:files].each do |file|
@@ -20,7 +21,17 @@ class API::V1::PostsController < APIController
   end
 
   def destroy
-    @post.destroy
+    #delete destination from post
+    if params[:post_id]
+      @post = Post.find(params[:post_id])
+      @dest = Destination.find(params[:destination_id])
+      if @post.destinations.include? @dest
+        @post.destinations.delete(@dest)
+      end
+    else
+      @post = Post.find[:id]
+    end
+    #@post.destroy
   end
 
   def index

@@ -28,7 +28,14 @@ class API::V1::TripsController < APIController
   end
 
   def index
-    @trips = Trip.all
+    if params[:search]
+      puts params[:search]
+      strips = Trip.where("name LIKE ? OR description LIKE ?", "%#{params[:search]}%", "%#{params[:search]}%")
+      ptrips = Trip.joins(:posts).where("posts.body LIKE ?", "%#{params[:search]}%")
+      @trips = strips + ptrips
+    else
+      @trips = Trip.all
+    end
     render json: @trips
   end
 

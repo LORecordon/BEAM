@@ -9,6 +9,7 @@ Rails.application.routes.draw do
       get 'users/:email/edit', to: 'users#edit', constraints: { email: /[^\/]+/ }, as: 'edit_user_wemail'
       delete 'users/:email', to: 'users#destroy', constraints: { email: /[^\/]+/ }, as: 'destroy_user_wemail'
       post 'users', to: 'users#create', as: 'create_user'
+      delete "posts/:post_id/destinations/:destination_id", to: "posts#destroy", constraints: { email: /[^\/]+/ }, as: 'destroy_dest_from_trip'
 
       resources :api_keys, path: 'api-keys', only: %i[index create destroy]
 
