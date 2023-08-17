@@ -1,0 +1,53 @@
+version: '3.3'
+volumes:
+  postgres_data: {}
+  asset_data: {}
+
+services:
+  app:
+    restart: always
+    environment:
+      RAILS_SERVE_STATIC_FILES: 'true'
+      RAILS_LOG_TO_STDOUT: 'true'
+    build:
+      context: .
+      dockerfile: ./docker/app/DockerFile
+    volumes:
+      - type: volume
+        source: asset_data
+        target: /var/www/TravelBlog/public/
+    secrets:
+      - db_username
+      - db_password
+    depends_on:
+      - db
+  db:
+    restart: always
+    environment:
+      # From https://hub.docker.com/_/postgres | Docker Secrets:
+      POSTGRES_USER_FILE: /run/secrets/db_username
+      POSTGRES_PASSWORD_FILE: /run/secrets/db_password
+    image: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    secrets:
+      - db_username
+      - db_password
+  web:
+    restart: always
+    build:
+      context: .
+      dockerfile: ./docker/web/DockerFile
+    volumes:
+      - type: volume
+        source: asset_data
+        target: /usr/share/nginx/html/assets
+    depends_on:
+      - app
+    ports:
+      - 9090:90
+secrets:
+  db_password:
+    file: ./secrets/database_password.txt
+  db_username:
+    file: ./secrets/database_username.txt

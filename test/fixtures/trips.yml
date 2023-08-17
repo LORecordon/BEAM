@@ -1,0 +1,29 @@
+# == Schema Information
+#
+# Table name: trips
+#
+#  id          :integer          not null, primary key
+#  author      :integer          not null
+#  description :text
+#  end_date    :datetime
+#  name        :string
+#  start_date  :datetime
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#
+# Indexes
+#
+#  index_trips_on_author  (author)
+#
+
+one:
+  name: MyString
+  description: MyText
+  start: 2022-12-05 14:49:10
+  end: 2022-12-05 14:49:10
+
+two:
+  name: MyString
+  description: MyText
+  start: 2022-12-05 14:49:10
+  end: 2022-12-05 14:49:10

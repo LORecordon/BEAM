@@ -1,0 +1,21 @@
+# == Schema Information
+#
+# Table name: destinations
+#
+#  id         :integer          not null, primary key
+#  city       :string
+#  country    :string
+#  latitude   :float
+#  longitude  :float
+#  name       :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
+one:
+  country: MyString
+  city: MyString
+
+two:
+  country: MyString
+  city: MyString
