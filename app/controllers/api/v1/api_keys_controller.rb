@@ -6,7 +6,18 @@ class API::V1::APIKeysController < APIController
   end
 
   def create
+    #user = User.find_by(email: params["Username"])
+    #if user.authenticate(params["Password"])
+
+    #  api_key = user&.api_keys.create!(token: SecureRandom.hex)
+    #  puts api_key
+    #  render json: api_key, status: :created and return
+    #else 
+    #  render status: :unauthorized
+    #end
     authenticate_with_http_basic do |email, password|
+      puts "here"
+      puts email
       user = User.find_by(email: email)
 
       if user.authenticate(password)
