@@ -51,7 +51,13 @@ class API::V1::PostsController < APIController
   end
 
   def attachImg
-    puts params
+    @post = Post.find(params[:id])
+    if @post.files.attach(params[:image])
+      render json: {message: "Image Added"}, status: :ok
+    else
+      render json: {error: "Image Not Added"}, status: :unprocessable_entity
+    end
+
   end
 
 

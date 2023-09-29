@@ -28,6 +28,7 @@ Rails.application.routes.draw do
       get "profile_pic", to: "users#get_pic"
       post "posts/:id/addimg", to: "posts#attachImg"
       get "posts/:id/images", to: "posts#images"
+      get "friendships/friends", to: "friendships#userFriends"
     end
   end
   # Defines the root path route ("/")
