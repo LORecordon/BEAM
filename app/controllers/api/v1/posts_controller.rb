@@ -1,5 +1,5 @@
 class API::V1::PostsController < APIController
-  before_action :set_post, only: %i[ show edit update ]
+  before_action :set_post, only: %i[ show edit update destroy ]
   before_action :authenticate_with_api_key!
 
 
@@ -8,12 +8,12 @@ class API::V1::PostsController < APIController
   end
 
   def create
-    puts "hi"
-    @post = Post.new(post_params)
+    @post = Post.new()
+    author = User.find_by(email: params[:author])
+    @post.author = author
+    trip = Trip.find(params[:trip_id])
+    @post.trip = trip
     if @post.save
-      params[:files].each do |file|
-        @post.medias.create(file: file)
-      end
       render json: @post
     else
       render json: @post.errors, status: :unprocessable_entity
@@ -21,17 +21,7 @@ class API::V1::PostsController < APIController
   end
 
   def destroy
-    #delete destination from post
-    if params[:post_id]
-      @post = Post.find(params[:post_id])
-      @dest = Destination.find(params[:destination_id])
-      if @post.destinations.include? @dest
-        @post.destinations.delete(@dest)
-      end
-    else
-      @post = Post.find[:id]
-    end
-    #@post.destroy
+    @post.destroy
   end
 
   def index
@@ -53,6 +43,17 @@ class API::V1::PostsController < APIController
 
   end
 
+  def images
+    @post = Post.find(params[:id])
+    @images = @post.files
+
+    render json: @images.map { |image| url_for(image)}, status: :ok
+  end
+
+  def attachImg
+    puts params
+  end
+
 
   private
 
@@ -62,12 +63,12 @@ class API::V1::PostsController < APIController
   # Only allow a list of trusted parameters through.
   # #TODO: More params like users, destinations, photos, etc.
   def post_params
-    params.fetch(:post, {}).permit(:id, :trip_id, :title, :description, :author, :public, :files)
+    params.fetch(:post, {}).permit(:id, :trip_id, :title, :description, :author, :public, :files, destination: [:id, :name, :latitude, :longitude, :country, :city, :trip_id])
   end
 
   def update_params
 
-    params.fetch(:post, {}).permit(:id, :title, :description, :author, :public, :files)
+    params.fetch(:post, {}).permit(:id, :trip_id, :title, :description, :author, :public, :files, destination: [:id, :name, :latitude, :longitude, :country, :city, :trip_id])
   end
 
 

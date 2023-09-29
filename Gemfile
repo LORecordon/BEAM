@@ -63,3 +63,7 @@ group :production do
   # Use PostgreSQL as the database for Active Record
   gem 'pg', '~> 1.3', '>= 1.3.5'
 end
+
+gem 'rqrcode'
+
+gem 'chunky_png'

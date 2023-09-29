@@ -2,16 +2,17 @@
 #
 # Table name: users
 #
-#  id              :integer          not null, primary key
-#  description     :text
-#  dob             :date
-#  email           :string           not null
-#  first_name      :string
-#  last_name       :string
-#  password_digest :string           not null
-#  phone           :string
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
+#  id               :integer          not null, primary key
+#  description      :text
+#  dob              :date
+#  email            :string           not null
+#  first_name       :string
+#  friendship_token :string
+#  last_name        :string
+#  password_digest  :string           not null
+#  phone            :string
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
 #
 # Indexes
 #
@@ -29,6 +30,10 @@ class User < ApplicationRecord
   has_many :destinations, through: :posts
   has_many :users, through: :posts
 
+  has_many :friendships
+  has_many :friends, through: :friendships
+
+  has_one_attached :profilePic
 end
 
 

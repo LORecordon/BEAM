@@ -10,7 +10,6 @@ Rails.application.routes.draw do
       delete 'users/:email', to: 'users#destroy', constraints: { email: /[^\/]+/ }, as: 'destroy_user_wemail'
       post 'users', to: 'users#create', as: 'create_user'
       delete "posts/:post_id/destinations/:destination_id", to: "posts#destroy", constraints: { email: /[^\/]+/ }, as: 'destroy_dest_from_trip'
-
       resources :api_keys, path: 'api-keys', only: %i[index create destroy]
 
       resources :trips, shallow: true do
@@ -21,6 +20,14 @@ Rails.application.routes.draw do
 
       resources :destinations
       resources :posts
+
+      resource :friendships
+
+      resource :friendship_token, only: [:show]
+      post "update_pic", to: "users#upload_profile_pic"
+      get "profile_pic", to: "users#get_pic"
+      post "posts/:id/addimg", to: "posts#attachImg"
+      get "posts/:id/images", to: "posts#images"
     end
   end
   # Defines the root path route ("/")

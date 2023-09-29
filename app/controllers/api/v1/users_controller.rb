@@ -1,6 +1,6 @@
 class API::V1::UsersController < APIController
-  before_action :set_user, only: %i[ show edit update destroy ]
-  before_action :authenticate_with_api_key!, only: %i[ show edit update destroy ]
+  before_action :set_user, only: %i[ show edit update destroy upload_profile_pic get_pic]
+  before_action :authenticate_with_api_key!, only: %i[ show edit update destroy upload_profile_pic get_pic]
 
   # GET /users or /users.json
   def index
@@ -39,6 +39,24 @@ class API::V1::UsersController < APIController
       render @user
     else
       render json: @user.errors, status: :unprocessable_entity
+    end
+  end
+
+  def upload_profile_pic
+    puts "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    puts @user
+    if @user&.profilePic.attach(params[:profilePic])
+      redirect_to rails_blob_url(@user.profilePic)
+    else 
+      render json: {message: "Failed"}
+    end
+  end
+
+  def get_pic
+    if @user.profilePic.attached?
+      redirect_to rails_blob_url(@user.profilePic)
+    else 
+      render json: {message: "NO"}, status: :not_found
     end
   end
 
