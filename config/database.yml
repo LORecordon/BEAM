@@ -9,6 +9,7 @@ default: &default
   encoding: unicode
   username: "postgres"
   password: "12345678"
+  database: "mydb"
   pool: 5
   host: db
 
