@@ -7,8 +7,8 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  username: <%= begin IO.read('/run/secrets/db_username') rescue "" end %>
-  password: <%= begin IO.read('/run/secrets/db_password') rescue "" end %>
+  username: "postgres"
+  password: "12345678"
   pool: 5
   host: db
 
